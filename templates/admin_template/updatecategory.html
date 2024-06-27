@@ -1,0 +1,10 @@
+{% extends 'admin_template/base.html' %}
+{% block body %}
+<div class="col-md-4 border m-5 p-5"><form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" class="btn btn-primary" value="Update">
+</form>
+{% endblock %}</div>
+<div class="col-md-4 " ></div>
+<div class="col-md-4"></div>

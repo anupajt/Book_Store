@@ -1,0 +1,20 @@
+{% extends 'admin_template/base.html' %}
+
+{% block body %}
+<h5 class="card-title text-center">Notifications</h5>
+{% for message in messages_list %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <p class="card-text">
+      {% if message.timestamp %}
+        <small class="text-muted">{{ message.timestamp }}</small><br> <!-- Display timestamp -->
+      {% endif %}
+      {% if message.tags %} {{ message.tags }} {% endif %}
+      {{ message }}
+    </p>
+    <a href="{% url 'customer_orders' %}" class="btn-btn-info">Go to Orders</a>
+
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

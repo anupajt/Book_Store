@@ -1,0 +1,47 @@
+{% extends 'user_template/userbase.html' %}
+{% block title %}Category Search{% endblock %}
+{% block body %}
+  {% if categories %}
+    <h3 class="text-center mt-4">Books sorted by "{{ categories.c_name }}"</h3>
+
+    <div class="container">
+      <div class="row">
+        {% for book in books %}
+          {% if forloop.counter0|divisibleby:3 %}
+            <div class="row">
+          {% endif %}
+
+          <div class="col-md-4 m-4">
+            <div class="card" style="width: 400px;height:450px;">
+              <img src="{{ book.image.url }}" class="card-img-top p-4" style="height: 300px;" alt="...">
+              <div class="card-body">&nbsp;&nbsp;&nbsp;&nbsp;
+                <button  class="btn btn-primary">₹{{ book.price }}</button>
+                <button  class="btn btn-info">{{ book.categories.first.c_name }}</button>
+                <button  class="btn btn-warning">{% if book.quantity >= 6 %}
+                    <span class="instock" style="color: green;">In stock</span>
+                  {% elif book.quantity >= 1 and book.quantity <= 5 %}
+                    <span class="outstock" style="color: red;">Only {{ book.quantity }} left</span>
+                  {% else %}
+                    <span class="outstock" style="color: grey;">Out of stock</span>
+                  {% endif %}</button>
+                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="{% url 'user_book:add_to_cart' book.id %}" class="btn btn-outline-primary"><i class="fa-solid fa-cart-shopping"></i></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="{% url 'user_book:add_to_wishlist' book.id %}" class="btn btn-outline-danger"><i class="fa-regular fa-heart"></i></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="{% url 'user_book:user_view' book.id %}" class="btn btn-outline-warning"><i class="fa-solid fa-eye"></i></a>
+
+              </div>
+            </div>
+          </div>
+
+          {% if forloop.counter|divisibleby:3 or forloop.last %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <p>No Category Found</p>
+  {% endif %}
+{% endblock %}

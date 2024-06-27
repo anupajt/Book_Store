@@ -1,0 +1,73 @@
+{% extends 'user_template/userbase.html' %}
+{% load static %}
+{% block title %} Your Orders{% endblock %}
+
+{% block body %}
+
+
+    <div class="mb-4">
+        <h3 class="text-center">Ordered Items</h3> <br><br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID #</th>
+                    <th>Order Date</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    {% for item in order_items %}
+                        {% if item.order == order %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.order_date }}</td>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.price }}</td>
+                            <td id="order-status-{{ order.id }}">{{ order.status }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    function updateOrderStatus(orderId) {
+        // Make an AJAX request to fetch the latest order status
+        $.ajax({
+            url: `/get_latest_order_status/${orderId}/`,  // Replace with the actual URL
+            method: 'GET',
+            success: function (data) {
+                // Update the order status in the HTML
+                $(`#order-status-${orderId}`).text(data.status);
+            },
+            error: function () {
+                console.error('Failed to fetch order status.');
+            }
+        });
+    }
+
+    // Call the updateOrderStatus function for each order on the page
+    $(document).ready(function () {
+        {% for order in orders %}
+            updateOrderStatus({{ order.id }});
+        {% endfor %}
+
+        // Set up periodic polling to refresh order statuses (every 5 seconds)
+        setInterval(function () {
+            {% for order in orders %}
+                updateOrderStatus({{ order.id }});
+            {% endfor %}
+        }, 5000); // Poll every 5 seconds (adjust as needed)
+    });
+</script>

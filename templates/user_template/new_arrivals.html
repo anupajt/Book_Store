@@ -1,0 +1,90 @@
+{% extends 'user_template/userbase.html' %}
+
+<head>
+  <meta charset="UTF-8">
+  {% block title %}Book store:Catalog{% endblock %}
+  <meta property="og:image" content="//image.prntscr.com/image/93970e70e1f045e1aff76e05469008d8.png" />
+<meta property="og:image:secure_url" content="//image.prntscr.com/image/93970e70e1f045e1aff76e05469008d8.png" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="400" />
+<meta property="og:image:height" content="300" /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+{% block body %}
+<!-- partial:index.partial.html -->
+<div class="container text-center">
+<h1>New Arrivals</h1>
+</div>
+
+
+<div class="shell">
+  <div class="container">
+    <div class="row">
+        {% for book in new_books %}
+      <div class="col-md-3">
+        <div class="wsk-cp-product">
+          <div class="wsk-cp-img">
+            <img src="{{ book.image.url }}" alt="Product" class="img-responsive" style="height:300px;"/>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    ₹{{ book.price }}
+
+  </span>
+          </div>
+          <div class="wsk-cp-text">
+            <div class="category">
+              <span>
+                                    {% for category in book.categories.all %}
+                                        {{ category.c_name }}
+
+                                    {% endfor %}</span>
+            </div>
+            <div class="title-product">
+              <h3>{{ book.author }}</h3>
+            </div>
+            <div class="card-footer">
+
+              <div class="wcf-right text center">
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="{% url 'user_book:user_view' book.id %}" class="btn btn-outline-warning"><i class="fa-solid fa-eye"></i></a>
+                                                  <a href="{% url 'user_book:add_to_wishlist' book.id %}" class="btn btn-outline-danger"><i class="fa-regular fa-heart"></i></a>
+
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- partial -->
+<div class="pagination" style="margin-left:700px;">
+    <ul class="pagination justify-content-center">
+        {% for num in page.paginator.page_range %}
+            <li class="page-item {% if page.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if page.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous page">
+                    «
+
+                </a>
+            </li>
+        {% endif %}
+
+        {% if page.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next page">
+                    »
+
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
+

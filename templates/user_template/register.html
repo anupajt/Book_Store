@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- Created By CodingNepal -->
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Register Form</title>
+      <link rel="stylesheet" href="{% static 'user_static/css/register.css' %}">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+   </head>
+   <body>
+
+      <div class="center">
+         <div class="header">
+           Register Form
+         </div>
+         <form method="post">
+             {% csrf_token %}
+
+           {{form.username}}
+            <i class="fas fa-user"></i><br>
+
+           {{form.email}}
+           <i class="far fa-envelope"></i>
+
+           {{form.password1}}
+            <i class="fas fa-lock" onclick="show()"></i>
+
+           {{form.password2}}
+            <i class="fas fa-lock" onclick="show()"></i>
+            <input type="submit" value="Sign up">
+             {{form.errors}}
+            <a href="{% url 'user_book:user_login' %}">Already Member?</a>
+         </form>
+      </div>
+      <script>
+         function show(){
+          var pswrd = document.getElementById('pswrd');
+          var icon = document.querySelector('.fas');
+          if (pswrd.type === "password") {
+           pswrd.type = "text";
+           pswrd.style.marginTop = "20px";
+           icon.style.color = "#7f2092";
+          }else{
+           pswrd.type = "password";
+           icon.style.color = "grey";
+          }
+         }
+
+
+         var form_fields= document.getElementsByTagName('input')
+         form_fields[1].placeholder='Username'
+         form_fields[2].placeholder='E-mail'
+         form_fields[3].placeholder='Password'
+         form_fields[4].placeholder='Conform Password'
+
+         for (var field in form_fields){
+         form_fields[field].className+='form-control'
+         }
+      </script>
+   </body>
+</html>

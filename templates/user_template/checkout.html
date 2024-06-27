@@ -1,0 +1,79 @@
+{% extends 'user_template/userbase.html' %}
+
+{% block title %} Billing Address{% endblock %}
+
+{% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'user_book:cart' %}">Cart</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'user_book:checkout' %}">Billing Address</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'user_book:review' %}">Review</a></li>
+
+    </ol>
+  </nav>
+
+    {% for ms in messages %}
+<div class="alert alert-warning" role="alert">
+    {{ ms }}
+    </div>
+  {% endfor %}
+
+
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+       <form method="post" class="border p-5">
+          {% csrf_token %}
+            <div class="mb-3 row">
+              <div class="col-md-6">
+                  <label for="{{ form.name.id_for_label }}">Name</label>
+                  {{ form.name }}
+              </div>
+              <div class="col-md-6">
+                  <label for="{{ form.phone_number.id_for_label }}">Phone number</label>
+                  {{ form.phone_number }}
+              </div>
+          </div>
+          <div class="mb-3 row">
+              <div class="col-md-6">
+                  <label for="{{ form.street_address.id_for_label }}">Street Address</label>
+                  {{ form.street_address }}
+              </div>
+              <div class="col-md-6">
+                  <label for="{{ form.apartment_suite.id_for_label }}">Apartment/Suite</label>
+                  {{ form.apartment_suite }}
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <label for="{{ form.city.id_for_label }}">City</label>
+                  {{ form.city }}
+              </div>
+              <div class="col-md-6">
+                  <label for="{{ form.zip_code.id_for_label }}">Zip Code</label>
+                  {{ form.zip_code }}
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <label for="{{ form.state.id_for_label }}">State</label>
+                  {{ form.state }}
+              </div>
+              <div class="col-md-6">
+                  <label for="{{ form.country.id_for_label }}">Country</label>
+                  {{ form.country }}
+              </div>
+          </div><br>
+           <div class="d-grid gap-2 col-6 mx-auto">
+  <button type="submit" class="btn btn-primary ">Continue Processing</button>
+
+</div>
+
+      </form>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

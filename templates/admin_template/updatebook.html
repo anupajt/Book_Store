@@ -1,0 +1,55 @@
+{% extends 'admin_template/base.html' %}
+{% block body %}
+<div class="container border" id="update">
+ <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <!-- Book Name Field -->
+                <label for="{{ form.name.id_for_label }}" class="form-label ">Book Name</label>
+                {{ form.name }}
+            </div>
+            <div class="col-md-6">
+                <!-- Author Field -->
+                <label for="{{ form.author.id_for_label }}" class="form-label">Author</label>
+                {{ form.author }}
+            </div>
+        </div>
+
+        <!-- Other form fields -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <!-- Price Field -->
+                <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
+                {{ form.price }}
+            </div>
+            <div class="col-md-6">
+                <!-- Quantity Field -->
+                <label for="{{ form.quantity.id_for_label }}" class="form-label">Quantity</label>
+                {{ form.quantity }}
+            </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+            {{ form.description }}
+        </div>
+
+        <!-- Image Field -->
+        <div class="mb-3">
+            <label for="{{ form.image.id_for_label }}" class="form-label">Image</label>
+            {{ form.image }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.image.id_for_label }}" class="form-label">categories</label>
+            {{ form.categories }}
+        </div>
+
+        <div class="d-grid gap-2 col-6 mx-auto ">
+  <button class="btn btn-primary" type="submit">Update</button>
+
+</div>
+    </form>
+</div>
+{% endblock %}

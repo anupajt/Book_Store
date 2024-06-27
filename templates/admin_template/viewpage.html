@@ -1,0 +1,51 @@
+{% extends 'admin_template/base.html' %}
+
+
+{% block body %}
+
+<div class="container p-4" >
+<div class="card mb-3 ms-5 p-5">
+  <h2>{{book.name}}</h2>
+<div class="row">
+
+    <img src="{{book.image.url}}" class="card-img-top p-1" style="height:400px;width:400px;" alt="...">
+  <div class="col-md-6">
+
+
+  <div class="card-body">
+    <h5 class="card-title"><b>"{{book.name}}"   written by  "{{book.author}}" </b></h5>
+    <p class="card-text"> {{book.description}}</p>
+      <p class="card-text">Price: {{book.price}}</p>
+      <p class="card-text">Quantity: {{book.quantity}}</p>
+<p>Latest Updated Date: <span id="latest_updated_date">{{ latest_updated_date }}</span></p>
+
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+
+<script>
+
+function updateLatestUpdatedDate() {
+    console.log("Updating latest updated date...");
+    const bookId = {{ book.id }};  // Assuming you have the book's ID in your template
+    fetch(`/update/${bookId}/get_latest_updated_date/`)  // Adjust the URL to match your Django view
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received data:", data);
+            const latestUpdatedDate = new Date(data.latest_updated_date);
+            const latestUpdatedDateString = latestUpdatedDate.toLocaleString();
+            document.getElementById('latest_updated_date').textContent = latestUpdatedDateString;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+// Call updateLatestUpdatedDate() initially
+updateLatestUpdatedDate();
+
+// Set an interval to update the date every minute (adjust as needed)
+setInterval(updateLatestUpdatedDate, 60000);
+</script>
+
+{% endblock %}

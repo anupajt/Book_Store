@@ -1,0 +1,41 @@
+{% extends 'admin_template/base.html' %}
+
+{% block body %}
+
+<div class="container mt-4">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for category in categories %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>  <img src="{{ category.image.url }}" alt=""></td>
+      <td><a href="{% url 'books_by_category' category.id %}">{{ category.c_name }}</a></td>
+      <td><a href="{% url 'update_category' category.id %}" class="btn btn-warning">EDIT</a>
+      <a href="{% url 'delete_category' category.id %}" class="btn btn-danger">DELETE</a></td>
+    </tr>
+         {% endfor %}
+  </tbody>
+</table>
+
+  <!-- Place the Create New button in the bottom-right corner -->
+  <a href="{% url 'create_category' %}" class="btn btn-primary position-fixed" style="bottom: 100px; right: 20px;"
+     data-toggle="tooltip" data-placement="top" title="Create New">
+    <i class="fa-regular fa-square-plus"></i>
+  </a>
+</div>
+{% endblock %}
+<script>
+  // Initialize Bootstrap tooltips
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+

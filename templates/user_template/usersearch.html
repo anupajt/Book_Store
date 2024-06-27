@@ -1,0 +1,35 @@
+{% extends 'user_template/userbase.html' %}
+{% block title %}BokStore:Search{% endblock %}
+{% block body %}
+
+        {% if books %}
+<div class="container">
+    <div class="row">
+
+
+
+        {% for book in books %}
+        <div class="col-md-4">
+            <div class="card mb-5" style="width:350px; height:400px;">
+                <div>
+                    <img src="{{ book.image.url }}" class="card-img-top mt-3" alt="..."
+                        style="width:250px; height:200px;margin-left:50px;">
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">Book: {{ book.name }}</h5>
+                    <h5 class="card-title">Author: {{ book.author }}</h5>
+                    <a href="{% url 'user_book:add_to_cart' book.id %}" class="btn btn-outline-warning"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="{% url 'user_book:add_to_wishlist' book.id %}" class="btn btn-outline-danger"><i class="fa-regular fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="container" style="margin-left:500px;">
+            <p>No results found.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

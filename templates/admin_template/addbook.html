@@ -1,0 +1,70 @@
+{% extends 'admin_template/base.html' %}
+{% block body %}
+ <div class="row">
+    <div class="col-md-12">
+
+        {% for msg in messages %}
+       <div class="alert alert-danger" role="alert">
+          {{ msg }}
+           </div>
+        {% endfor %}
+
+    </div>
+  </div>
+<div class="container content mb-5 mt-5 border" id="add">
+    <form method="post" enctype="multipart/form-data"  class="m-3 p-3">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <!-- Book Name Field -->
+                <label  class="form-label ">Book Name</label>
+                {{ form.name }}
+            </div>
+            <div class="col-md-6">
+                <!-- Author Field -->
+                <label  class="form-label">Author</label>
+                {{ form.author }}
+            </div>
+        </div>
+
+        <!-- Other form fields -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <!-- Price Field -->
+                <label class="form-label">Price</label>
+                {{ form.price }}
+            </div>
+            <div class="col-md-6">
+                <!-- Quantity Field -->
+                <label  class="form-label">Quantity</label>
+                {{ form.quantity }}
+            </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label  class="form-label">Description</label>
+            {{ form.description }}
+        </div>
+
+        <!-- Image Field -->
+        <div class="mb-3">
+            <label  class="form-label">Image</label>
+            {{ form.image }}
+        </div>
+
+        <div class="mb-3">
+            <label  class="form-label">categories</label>
+            {{ form.categories }}
+        </div>
+<div >
+            <label  class="form-label">Out of stock</label>
+            {{ form.out_of_stock }}
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto ">
+  <input class="btn btn-primary" type="submit">
+
+</div>
+    </form>
+</div>
+{% endblock %}

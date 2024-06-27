@@ -1,0 +1,49 @@
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Admin Login </title>
+    <link rel="stylesheet" href="{% static 'admin_static/css/login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <div class="container" style="width:500px;">
+
+  {% for msg in messages %}
+      <div class="alert alert-primary" role="alert">
+{{ msg }}
+        </div>
+{% endfor %}
+
+      <div class="wrapper">
+
+        <div class="title"><span>ADMINISTRATOR LOGIN</span></div>
+        <form method="post" >
+          {% csrf_token %}
+          <div class="row">
+            <i class="fas fa-user"></i>
+            <input type="text" name="username" placeholder="username" required>
+          </div>
+          <div class="row">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password" placeholder="Password" required>
+          </div>
+
+          <div class="row button">
+            <input type="submit" value="Login">
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'user_template/userbase.html' %}
+{% block title %}Book store: View Book{% endblock %}
+{% block body %}
+<div>
+    <h6 class="mb-0"><a href="{% url 'user_book:listbook' %}" class="text-body"><i
+                class="fas fa-long-arrow-alt-left me-2"></i>Back to Book Shop</a></h6>
+</div>
+<div class="container p-4" >
+    <div class="card mb-3 ms-5 p-5" >
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h5 class="card-title"><b>"{{ book.name }}" written by "{{ book.author }}"</b></h5>
+                    <p class="card-text">{{ book.description }}</p>
+                    <p class="card-text">Price: {{ book.price }}</p>
+                    <p>
+                        {% if book.quantity >= 6 %}
+                        <div class="instock" style="color: green;">In stock</div>
+                        {% elif book.quantity >= 1 and book.quantity <= 5 %}
+                        <div class="outstock" style="color: red;">Only {{ book.quantity }} left</div>
+                        {% else %}
+                        <div class="outstock" style="color: grey;">Out of stock</div>
+                        {% endif %}
+                    </p>
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <a href="{% url 'user_book:add_to_cart' book.id %}" class="btn btn-outline-dark"><i
+                                class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="{% url 'user_book:add_to_wishlist' book.id %}" class="btn btn-outline-danger">Wishlist</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 position-relative">
+                <!-- Use position-relative to create a reference point for absolute positioning -->
+                <img src="{{ book.image.url }}" class="card-img-top p-1 "
+                    style="object-fit: cover;"
+                    alt="...">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

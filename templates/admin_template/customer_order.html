@@ -1,0 +1,48 @@
+{% extends 'admin_template/base.html' %}
+{% load i18n %}
+{% block body %}
+<div class="container mt-4">
+    <h2 class="text-center">User-Ordered Items</h2>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">{% trans 'Order ID' %}</th>
+                <th scope="col">{% trans 'User' %}</th>
+                <th scope="col">{% trans 'Product' %}</th>
+                <th scope="col">{% trans 'Quantity' %}</th>
+                <th scope="col">{% trans 'Price' %}</th>
+                <th scope="col">{% trans 'Status' %}</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in ordered_items %}
+            <tr>
+                <td>{{ item.order.id }}</td>
+                <td>{{ item.order.user.username }}</td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td>
+                    {% block object-tools-items %}
+                    <form  method="post"  class="form">
+                        {% csrf_token %}
+                        <select name="status" id="id_status" class="form-control">
+                            <option value="" selected>{% trans 'Choose status' %}</option>
+                            <option value="confirmed">{% trans 'Confirmed' %}</option>
+                            <option value="dispatched">{% trans 'Dispatched' %}</option>
+                            <option value="shipped">{% trans 'Shipped' %}</option>
+                            <option value="delivered">{% trans 'Delivered' %}</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm mt-2">
+                            {% trans 'Update' %}
+                        </button>
+                    </form>
+                    {% endblock %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

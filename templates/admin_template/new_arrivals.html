@@ -1,0 +1,22 @@
+{% extends 'admin_template/base.html' %}
+
+{% block body %}
+
+<div class="container p-4">
+    <h2>New Arrivals</h2>
+    <div class="row">
+        {% for book in new_books %}
+        <div class="col-md-3 mb-4"> <!-- Adjust the column width as needed -->
+            <div class="card">
+                <img src="{{ book.image.url }}" class="card-img-top" alt="..." style="height:200px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.name }}</h5>
+                    <!-- Display other book details as needed -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+stripe
+gtts
+beautifulsoup4
+psycopg2
+playsound

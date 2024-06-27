@@ -1,0 +1,110 @@
+{% extends 'user_template/userbase.html' %}
+{% load static %}
+{% block title %} Billing Address{% endblock %}
+
+{% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'user_book:cart' %}">Cart</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'user_book:checkout' %}">Billing Address</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'user_book:review' %}">Review</a></li>
+
+    </ol>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Display item details in columns -->
+      <div class="col-md-6">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+              <tr>
+
+                <td><img src="{{ order.product.image.url }}" style="height:100px;" class="img-fluid rounded-start p-3" alt="..."></td>
+                <td>{{ order.product.name }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>₹{{ order.price }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+    <tr>
+      <td colspan="3" class="text-end"><strong>Total:</strong></td>
+      <td><strong>₹{{ total }}</strong></td>
+    </tr>
+  </tfoot>
+        </table>
+      </div>
+      <!-- Display address on the right side -->
+      <div class="col-md-6" id="checkout">
+        <div class="card">
+          <div class="card-header">
+            Verify Address
+          </div>
+          <div class="card-body">
+            {% for address in billing_address %}
+              <p class="card-text"><strong>Name:</strong> {{ address.name }}</p>
+              <p class="card-text"><strong>Phone:</strong> {{ address.phone_number }}</p>
+              <p class="card-text"><strong>Street Address:</strong> {{ address.street_address }}</p>
+              <p class="card-text"><strong>Apartment/Suite:</strong> {{ address.apartment_suite }}</p>
+              <p class="card-text"><strong>City:</strong> {{ address.city }}</p>
+              <p class="card-text"><strong>State:</strong> {{ address.state }}</p>
+              <p class="card-text"><strong>Zip Code:</strong> {{ address.zip_code }}</p>
+              <p class="card-text"><strong>Country:</strong> {{ address.country }}</p>
+            {% endfor %}
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+ <form action="/user/create-checkout-session/" method="POST">
+  {% csrf_token %}
+<div class="d-grid gap-2">
+
+         <button type="submit" class="btn btn-warning" id="checkout-button">Proceed To Pay</button>
+
+</div>
+    </form>
+  </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  checkoutButton.addEventListener("click", function () {
+  fetch('/user/create-checkout-session/', {
+    method: "POST",
+    headers: {
+      'X-CSRFToken': csrftoken
+    }
+  })
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (session) {
+    console.log("Checkout session data:", session); // Move this line here
+    return stripe.redirectToCheckout({ sessionId: session.id });
+  })
+  .then(function (result) {
+    if (result.error) {
+      alert(result.error.message);
+    }
+  })
+  .catch(function (error) {
+    console.error("Error:", error);
+  });
+});
+
+
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+
+{% endblock %}

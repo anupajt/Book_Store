@@ -1,0 +1,50 @@
+{% extends 'user_template/userbase.html' %}
+{% load static %}
+{% block title %}Book store: Wishlist{% endblock %}
+{% block body %}
+<div>
+    <h6 class="mb-0">
+        <a href="{% url 'user_book:listbook' %}" class="text-body">
+            <i class="fas fa-long-arrow-alt-left me-2"></i> Back to Book list
+        </a>
+    </h6>
+</div>
+
+<div class="container mt-5">
+    <h3 class="text-center mb-4"><strong>Your Wishlist</strong></h3>
+    <div class="row">
+        {% for book in wishlist_books %}
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="{{ book.image.url }}" class="card-img-top p-2" alt="Image" style="height: 150px; width: 260px;">
+                    <div class="card-body text-center">
+                        <span class="position-absolute top-2 start-70 translate-middle p-2 bg-danger border border-light rounded-circle">
+                            <span class="text-white">₹{{ book.price }}</span>
+                        </span>
+                        <button type="button" class="btn btn-outline-warning mt-2">
+                            {% if book.quantity >= 6 %}
+                                <div class="instock" style="color: green;">In stock</div>
+                            {% elif book.quantity >= 1 and book.quantity <= 5 %}
+                                <div class="outstock" style="color: red;">Only {{ book.quantity }} left</div>
+                            {% else %}
+                                <div class="outstock" style="color: grey;">Out of stock</div>
+                            {% endif %}
+                        </button>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'user_book:add_to_cart' book.id %}" class="btn btn-success btn-sm">Add to Cart</a>
+                        <a href="{% url 'user_book:user_view' book.id %}" class="btn btn-primary btn-sm">View</a>
+                        <a href="{% url 'user_book:remove_from_wishlist' book.id %}" class="btn btn-danger btn-sm">Remove from Wishlist</a>
+                    </div>
+                </div>
+            </div>
+
+        {% empty %}
+            <div class="col-sm-12 empty-cart-cls text-center">
+                <img src="{% static 'user_static/images/empty_wishlist.png' %}" alt=""><br>
+                <a href="{% url 'user_book:listbook' %}" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Start shopping</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'user_template/userbase.html' %}
+
+{% block title %} Review{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'user_book:cart' %}">Cart</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'user_book:add_billing_address' %}">Billing Address</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'user_book:review' %}">Review</a></li>
+
+  </ol>
+</nav>
+{% for ms in messages %}
+{{ ms }}
+{% endfor %}
+<h2 class="text-center">Review Your Order</h2>
+<div class="row">
+
+  <div class="col-md-6"><div class="container p-5 border">
+    <div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+      {% for item in cart_items %}
+    <div class="col-md-4">
+      <img src="{{ item.book.image.url }}<" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">Name:{{ item.book.name }}<</h5>
+        <p class="card-text">Total price:{{ item.book.price }}<</p>
+          <p class="card-text">Quantity:{{ item.book.quantity }}<</p>
+
+      </div>
+    </div>
+      {% endfor %}
+  </div>
+</div>
+
+</div></div>
+  <div class="col-md-6">
+
+<div class="card ">
+  <div class="card-header">
+
+      Please verify the address
+  </div>
+  <div class="card-body">
+<h3>Billing Address</h3>
+    <p class="card-text">
+    <p>Name: {{ billing_address.name }}</p>
+    <p>Phone Number: {{ billing_address.phone_number }}</p>
+    <p>Street Address: {{ billing_address.street_address }}</p>
+    <p>City: {{ billing_address.city }}</p>
+    <p>State: {{ billing_address.state }}</p>
+    <p>Postal Code: {{ billing_address.postal_code }}</p>
+    <p>Country: {{ billing_address.country }}</p></p>
+    <a href="#" class="btn btn-warning">Proceed to Pay</a>
+    <a href="#" class="btn btn-danger">Edit Address</a>
+  </div>
+</div>
+
+  </div>
+
+</div>
+{% endblock %}
